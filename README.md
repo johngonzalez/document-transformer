@@ -84,7 +84,8 @@ for image in images:
 Or run like a pipeline, visualize the graph transformation
 
 ```python
-from document_transformer import Pipeline, plot_graph
+from document_transformer import Pipeline
+from document_transformer.utils import plot_graph
 
 # Define Pipeline, add more transformers as you need
 pipeline = Pipeline(transformers=[
