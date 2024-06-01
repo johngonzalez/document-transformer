@@ -1,3 +1,3 @@
 from .Document import Document
 from .Pipeline import Pipeline
-from .Transformer import Transformer
+from .Transformer import DocumentTransformer

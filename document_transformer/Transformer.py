@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional, Union
 from pydantic import BaseModel
 from pathlib import Path
-from document_transformer import Document
+from .Document import Document
 
 class DocumentTransformer(ABC, BaseModel):
     input: Optional[Union[Document, List[Document]]] = None

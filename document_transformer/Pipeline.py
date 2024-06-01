@@ -1,11 +1,12 @@
 from typing import List, Union, Any
 from pydantic import BaseModel
-from document_transformer import Document
-from document_transformer import DocumentTransformer
+from .Document import Document
+from .Transformer import DocumentTransformer
 
 from typing import get_type_hints, get_origin
 
 class Pipeline(BaseModel):
+
     transformers: List[DocumentTransformer]
     all_docs: Any = []
 
@@ -58,4 +59,3 @@ class Pipeline(BaseModel):
             }
             for doc in self.all_docs
         ]
-           
