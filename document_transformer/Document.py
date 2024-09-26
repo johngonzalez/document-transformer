@@ -72,3 +72,8 @@ class Document(BaseModel):
         for other in others:
             self.appender(other)
         return self
+    
+    def reset(self):
+        self.parents = []
+        self.childrens = []
+        return self
