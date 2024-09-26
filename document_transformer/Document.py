@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Set
 from pydantic import BaseModel, Field, field_validator
 from uuid import uuid4
 from pathlib import Path
@@ -8,8 +8,8 @@ class Document(BaseModel):
     path: Optional[str] = None
     data: Any = None
     metadata: Dict[str, Any] = {}
-    parents: List[str] = []
-    childrens: List[str] = []
+    parents: Set[str] = set()
+    childrens: Set[str] = set()
 
     @field_validator('path')
     def check_path_exists(cls, value):
@@ -49,10 +49,10 @@ class Document(BaseModel):
 
     def append(self, parent: 'Document'):
         # Si se agrega un documento adicional, este será padre
-        self.parents.append(parent.id)
+        self.parents.add(parent.id)
 
         # Y debemos agregar a este como hijo
-        parent.childrens.append(self.id)
+        parent.childrens.add(self.id)
         return self.appender(parent)
 
     def appender(self, parent):
@@ -61,10 +61,12 @@ class Document(BaseModel):
 
     def extend(self, parents: List['Document']):
         # Si se agregan documentos adicionales, estos serán padres
-        self.parents.extend([parent.id for parent in parents])
+        self.parents.update([parent.id for parent in parents])
 
         # Y debemos agregarlo como hijo
-        [parent.childrens.append(self.id) for parent in parents]
+        for parent in parents:
+            parent.childrens.add(self.id)
+        
         return self.extender(parents)
 
     def extender(self, others):
@@ -74,6 +76,6 @@ class Document(BaseModel):
         return self
     
     def reset(self):
-        self.parents = []
-        self.childrens = []
+        self.parents = {}
+        self.childrens = {}
         return self

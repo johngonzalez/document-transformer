@@ -35,35 +35,35 @@ class DocumentTransformer(ABC, BaseModel):
             # Muchos a muchos
             if isinstance(self.input, list):
                 for i, output in enumerate(self.output):
-                    output.parents += [input.id for input in self.input]
+                    output.parents.update([input.id for input in self.input])
                     if save_path:=self.get_save_path(output, i):
                         output.save(str(save_path))  # Guardar documento
                 for input in self.input:
-                    input.childrens += [output.id for output in self.output]
+                    input.childrens.update([output.id for output in self.output])
 
             else:
                 # uno a muchos
                 for i, output in enumerate(self.output):
-                    output.parents += [self.input.id]
+                    output.parents.add(self.input.id)
                     if save_path:=self.get_save_path(output, i):
                         output.save(str(save_path))  # Guardar documento
 
-                self.input.childrens += [output.id for output in self.output]
+                self.input.childrens.update([output.id for output in self.output])
 
         else:
             # Si input es una lista (Muchos a uno)
             if isinstance(self.input, list):
-                self.output.parents = [input.id for input in self.input]
+                self.output.parents.update([input.id for input in self.input])
                 if save_path:=self.get_save_path(self.output):
                     self.output.save(str(save_path))  # Guardar documento
 
                 for input in self.input:
-                    input.childrens += [self.output.id]
+                    input.childrens.add(self.output.id)
             # sino: Agregar información de los padres a output (uno a uno)
             else:
-                self.output.parents = [self.input.id]
+                self.output.parents.add(self.input.id)
                 if save_path:=self.get_save_path(self.output):
                     self.output.save(str(save_path))
-                self.input.childrens += [self.output.id]
+                self.input.childrens.add(self.output.id)
 
         return self.output
