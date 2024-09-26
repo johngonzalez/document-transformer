@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "document-transformer"
-version = "0.1.2"
+version = "0.1.3"
 description = "Organize your document transformation pipeline. Define your components, this tool ensure traceability and organization. Reuse your work easily in other projects"
 authors = ["John Gonzalez <johngonzalezv@gmail.com>"]
 readme = "README.md"
