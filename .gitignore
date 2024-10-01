@@ -1,4 +1,5 @@
 **/__pycache__
 examples/images
-examples/document.md
+examples/texts
+examples/markdowns
 dist
